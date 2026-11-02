@@ -1,42 +1,41 @@
-# Путь пользователя: от ссылки до результата
+# User journey: from a repository link to a result
 
-**Текущий результат: установка недоступна.** Список проверенных выпусков пуст.
-Ниже описан маршрут сопровождения, а не инструкция запуска экспериментальной прошивки.
+**Current outcome: installation is unavailable.** The validated release catalog
+is empty. This is a support workflow, not an experimental firmware installation guide.
 
-| Этап | Что делает агент | Что видит или делает пользователь | Условие перехода |
+| Stage | Agent action | User experience | Condition to proceed |
 |---|---|---|---|
-| 1. Получение ссылки | Читает обязательные документы и каталог | Получает короткий ответ о доступности | Каталог известного поддерживаемого формата |
-| 2. Доступность | Проверяет наличие проверенного выпуска | Сейчас: «Обновления нет, подключать камеру не нужно» | При пустом каталоге завершить |
-| 3. Совместимость | По будущей инструкции сверяет модель, вариант и исходную прошивку | Отвечает на несколько конкретных вопросов | Все критерии выпуска подтверждены; похожего названия недостаточно |
-| 4. Осознанный выбор | Объясняет изменения, ограничения, риски и восстановление | Решает, нужно ли обновление | Нет незакрытых условий безопасности |
-| 5. Скачивание | Использует только ссылку конкретного проверенного выпуска и сверяет SHA-256 | Видит, какой файл получен и что проверено | Совпадение хеша и версии; один хеш не доказывает происхождение |
-| 6. Подготовка | Проверяет backup, восстановление, питание и целевую карту | Подтверждает конкретную запись | Явное согласие и все проверки выпуска |
-| 7. Обновление | Следует только инструкции выпуска, без догадок о кнопках/именах файлов | Отдельно подтверждает запуск, выполняет физические действия | Подтверждённое завершение по инструкции |
-| 8. Проверка | Проверяет версию, фото, сохранение, просмотр и штатные режимы | Получает понятный итог и ограничения | Успех проверен, а не предположен |
+| 1. Open the repository | Read required documents and catalog | A short availability explanation | Known, supported catalog format |
+| 2. Check availability | Look for a validated release | Currently: "No update is available; no camera connection is needed" | Stop when the catalog is empty |
+| 3. Check compatibility | Follow future release instructions to verify model, variant and source firmware | Answer a few specific questions | Every release criterion is met; a similar name is insufficient |
+| 4. Make an informed choice | Explain changes, limitations, risks and recovery | Decide whether to update | No outstanding safety requirements |
+| 5. Download | Use the specific validated release link and check SHA-256 | See which file was obtained and verified | Matching hash and version; a hash alone does not establish provenance |
+| 6. Prepare | Check backup, recovery, power and target card | Approve the specific write | Explicit agreement and all release checks passed |
+| 7. Update | Follow the release instructions without guessing buttons or filenames | Separately approve the update and perform physical steps | Completion confirmed as described by the release |
+| 8. Verify | Check version, capture, storage, playback and normal modes | Receive a clear result and limitations | Success observed, not assumed |
 
-Этапы 3–8 сейчас недоступны. Для них будущий выпуск должен предоставить
-точную матрицу совместимости, происхождение артефактов, хеши входа/выхода,
-аппаратные результаты, требования питания, backup и восстановления, точные
-действия обновления и сценарий отказа. Общая таблица не заменяет эти сведения.
+Stages 3–8 are currently unavailable. A future release must supply an exact
+compatibility matrix, artifact provenance, input/output hashes, hardware results,
+power requirements, backup and recovery requirements, precise update steps and a
+failure procedure. This general table does not replace those details.
 
-## Частые ситуации
+## Common situations
 
-**«У меня такая же камера, можно попробовать?»**
-Нет подтверждённого выпуска — нет поддерживаемой процедуры установки. Внешне
-одинаковые камеры могут различаться; неизвестную совместимость нельзя угадывать.
+**"I have the same camera. Can I try it?"**
+Without a validated release there is no supported installation procedure.
+Visually identical cameras can differ; do not guess compatibility.
 
-**«Агент не может открыть ссылку».**
-Можно передать ему четыре обязательных текстовых файла. Пока их содержание
-не проверено, агент не должен подбирать прошивку или просить подключить устройство.
+**"My agent cannot open the link."**
+You can provide the four required text files directly. Until their contents have
+been checked, the agent must not select firmware or request a device connection.
 
-**«Контрольная сумма отличается».**
-Файл не использовать. Не переименовывать и не отключать проверку для продолжения.
+**"The checksum does not match."**
+Do not use the file. Renaming it or disabling verification does not resolve a mismatch.
 
-**«На карте важные фотографии».**
-Сначала нужна локальная резервная копия и проверка её читаемости. Сейчас карта
-вообще не требуется; форматирование не является частью проверки доступности.
+**"There are important photos on my card."**
+A local backup and a readability check are required before any future update.
+No card is needed now; formatting is not part of checking availability.
 
-**«Обновление уже идёт или завершилось ошибкой».**
-Не применять догадки из этой общей инструкции. Нужна процедура отказа именно
-установленного выпуска; не выдавать повторную прошивку или отключение питания
-за универсальный способ восстановления.
+**"An update is running or has failed."**
+Do not improvise from this general guide. Use the failure procedure for the exact
+installed release. Reflashing or disconnecting power is not a universal recovery method.

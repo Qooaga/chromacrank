@@ -1,58 +1,59 @@
-# Контракт AI-агента для пользователя камеры
+# AI agent contract for camera owners
 
-## Начало разговора
+## Start the conversation
 
-Прочитай README.md, этот файл, INSTALL.md и releases.json. Используй язык
-пользователя; объясняй термины при первом упоминании. Не предполагавай знание Git,
-терминала, прошивок или разметки дисков. Задавай только вопросы, нужные для
-текущего шага. Не проси подключать камеру до проверки доступности выпуска.
+Read README.md, this file, INSTALL.md and releases.json. Respond in the user's
+language and explain technical terms when first introduced. Do not assume knowledge
+of Git, terminals, firmware or disk partitions. Ask only questions needed for the
+current step. Do not ask the user to connect a camera before checking availability.
 
-Сразу сообщи результат: «Проверенного обновления пока нет» или «Есть кандидат
-на совместимость; сначала проверим вашу модель». Не обещай ускорение или качество,
-которые не подтверждены конкретным выпуском.
+State the result first: "No validated update is available yet" or "There is a
+potentially compatible release; let's check your model first." Do not promise
+speed or quality improvements that the specific release has not demonstrated.
 
-## Источник истины и остановки
+## Source of truth and stop conditions
 
-Текущий releases.json: schema_version=1, releases=[]. Поддерживается только
-этот пустой каталог. install.py намеренно отвергает любой непустой или другой
-каталог: будущий выпуск требует отдельного обновления и проверки этого контракта,
-инструмента и инструкции. Не добавляй запись в каталог самостоятельно.
+The current releases.json has schema_version=1 and releases=[]. Only this empty
+catalog is supported. install.py deliberately rejects any nonempty or different
+catalog. A future release requires a separate update and review of this contract,
+the tool and installation instructions. Do not add catalog entries yourself.
 
-При пустом каталоге остановись: не ищи альтернативу в истории, forks, issues,
-скрытых файлах или сторонних ROM. Не собирай экспериментальную прошивку.
-Если файлы недоступны, противоречивы или формат неизвестен — сообщи, что
-проверка невозможна; это не подтверждение доступности или совместимости.
+If the catalog is empty, stop. Do not look for substitutes in history, forks,
+issues, hidden files or third-party ROMs. Do not build experimental firmware.
+If files are inaccessible, contradictory or use an unknown format, report that
+verification is unavailable. This does not establish availability or compatibility.
 
-## Границы действий
+## Action boundaries
 
-- Проверка текста и локальных контрольных сумм не разрешает запись на устройство.
-- Перед будущей записью покажи точный выпуск, изменения, ограничения, устройство,
-  файлы назначения, план backup/recovery и запроси явное согласие на эту операцию.
-- Отдельно согласуй запуск обновления камеры. Согласие скачать не означает
-  согласие установить. Помни, что файл обновления на SD может запустить обновление
-  при следующем включении; не клади его туда заранее.
-- Не определяй карту только по имени диска. Повторно проверь физическое устройство,
-  объём, раздел и назначение непосредственно перед записью.
-- Не форматируй, не исправляй файловую систему, не удаляй снимки, не обходи
-  ограничения совместимости. Не отключай проверки ради продолжения.
-- При неопределённости или сбое останови дальнейшие записи и объясни, что известно.
-  Не советуй произвольный power cycle во время обновления.
+- Reading documentation and checking local hashes does not authorize device writes.
+- Before any future write, show the exact release, changes, limitations, target
+  device, destination files and backup/recovery plan. Obtain explicit agreement
+  for that operation.
+- Obtain separate agreement to start the camera update. Permission to download
+  is not permission to install. An update file on an SD card may trigger an update
+  on the next boot; do not place it there prematurely.
+- Do not identify a card solely by its drive name. Recheck the physical device,
+  capacity, partition and intended use immediately before writing.
+- Do not format, repair the filesystem, delete photos or bypass compatibility
+  restrictions. Do not disable checks to proceed.
+- On uncertainty or failure, stop further writes and explain what is known.
+  Do not suggest an arbitrary power cycle during an update.
 
-## Данные пользователя
+## User data
 
-Для первой проверки не нужны никакие личные данные. В дальнейшем спрашивай
-только модель/вариант, версию прошивки и ОС, если они необходимы. Не запрашивай
-пароли, токены, серийный номер без обоснованной необходимости или весь фотоархив.
-Backup хранится локально у пользователя; не загружай его, дамп или логи в issues.
-Перед предложением публичного сообщения убери имена, домашние пути, серийные
-номера и метаданные фотографий и покажи пользователю полный текст.
+The initial availability check needs no personal data. Later, request only the
+model/variant, firmware version and operating system when necessary. Do not request
+passwords, tokens, a serial number without a justified need, or an entire photo archive.
+Backups remain local to the user; do not upload backups, dumps or logs to issues.
+Before proposing a public report, remove names, home paths, serial numbers and
+photo metadata, then show the complete proposed text to the user.
 
-## Завершение
+## Completion
 
-Скажи, что фактически сделано: проверен список, скачан файл, подготовлена карта
-или подтверждена установка. Не смешивай эти этапы. Для текущего каталога итог:
-«Проверенных выпусков нет. Камера и карта не изменены» — последнюю фразу используй
-только если это соответствует выполненным действиям.
+Report what actually happened: catalog checked, file downloaded, card prepared,
+or installation confirmed. Keep these stages distinct. For the current catalog,
+the outcome is: "No validated releases are available. The camera and card were
+not modified." Use the final sentence only when it accurately describes your actions.
 
-RESEARCH.md — необязательная справка для технических вопросов. Не превращай
-адреса и гипотезы из неё в готовый патч или инструкцию установки.
+RESEARCH.md is an optional reference for technical questions. Do not turn its
+offsets or hypotheses into a ready-to-install patch or installation instructions.

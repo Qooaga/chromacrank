@@ -1,78 +1,79 @@
-# Технические находки
+# Technical findings
 
-Состояние исследования: 2026-11-02. Это ориентиры для разработчика, **не готовые
-патчи и не инструкция обновления**. Поддерживаемых выпусков нет. Исследование
-выполнено на публичных образах; совместимость с отдельной камерой не гарантируется.
+Research status: 2026-11-02. These are developer references, **not ready-to-install
+patches or update instructions**. There are no supported releases. Analysis used
+public ROM images; compatibility with an individual camera is not guaranteed.
 
-## Эталонные образы
+## Reference images
 
-Полные SPII-образы по 2 MiB, SHA-256:
+Complete 2 MiB SPII images, identified by SHA-256:
 
 - Project-Sirius: `720ed0b65c91b149b0916498732b0ecf40227736ef5e3c126c487a7b5253436c`.
 - Keychain: `cc3b4b2fd7eb71ba5a441decdc86984261fac8418ee3e105d7e2b3c38b7ea42f`.
 
-Бинарные файлы не распространяются здесь. SHA идентифицирует вход исследования,
-но не доказывает соответствие прошивке конкретной камеры. В приведённых ниже
-координатах **file offset = runtime address + 0x200**.
+Binaries are not distributed here. A hash identifies a research input, not the
+firmware installed on a particular camera. For the coordinates below,
+**file offset = runtime address + 0x200**.
 
-## Подтверждено статически или в ограниченной эмуляции
+## Findings from static analysis or bounded emulation
 
-| Направление | Находка | Ограничение |
+| Area | Finding | Limitation |
 |---|---|---|
-| JPEG | Штатный selector80 выбирает таблицы квантования, совпадающие с IJG80. Доступны и проверены отдельные presets90/95 | Не доказан полный путь настройки исключительно фотосъёмки; hardware setters в пробах заменялись заглушками |
-| JPEG-буферы | В изученном initializer выделяются два буфера по716800bytes | Это не доказательство аппаратного ограничения длины выхода; overflow/error path не закрыт |
-| Capture events | Восстановлена статическая цепочка500B→500D→request→00500000→capture-front | Физическая кнопка и момент экспозиции не сопоставлены с этой цепочкой |
-| Очередь | В изолированной request-функции результат enqueue перезаписывается: при synthetic ошибке вызывающий код всё равно получает0 | Не доказана причина задержки, потеря кадра или отсутствие retry выше |
-| Таймеры | Есть OS-delay по тикам. В ветке7032 найдено20ticks, номинально200ms при конфигурации100Hz | Ветка связана с событиями после capture; нельзя считать паузу лишней или задержкой первого кадра |
-| FAT | В эталонном коде воспроизводились дефекты EOF/границы цепочки и обработки ошибки writeback; локальные исправления проверялись с synthetic block I/O | Не закрыты все контракты cache callers, multi-block I/O, SD/RTOS и аппаратная проверка; установочного патча нет |
-| USB | MSC vendor callback проверяет сигнатуруGP; FD28/FD2A/FF28/FF2A требуют state==2. Handshake-path после synthetic helper записывает1 | Штатный переход в2 не установлен; открывать общий gate нельзя: доступны также операции записи |
-| USB data | FD28 читает слово по адресу; FF28/FF2A используют callbacks копирования mapped memory | Это не подтверждённый полный физический SPI-дамп, неизвестные адреса могут быть MMIO |
-| LED | Кандидат runtime1E844 выбирает ресурс и отправляет UI-сообщение | Это не доказанный драйвер белой подсветки; Flash Off пока не реализован |
+| JPEG | Stock selector 80 chooses quantization tables matching IJG80. Separate presets 90/95 are available and have been checked | The complete still-photo-only configuration path is unproven; hardware setters were stubbed in probes |
+| JPEG buffers | The studied initializer allocates two buffers of 716800 bytes each | This does not prove the hardware output limit; overflow/error handling remains unresolved |
+| Capture events | A static chain was recovered: 0x500B → 0x500D → request → 0x00500000 → capture-front | The physical shutter button and exposure time have not been mapped to this chain |
+| Queue | An isolated request function overwrites the enqueue result: the caller receives 0 even with a synthetic error | This does not prove the cause of lag, a dropped frame or the absence of higher-level retries |
+| Timers | A tick-based OS delay exists. The 0x7032 branch contains a 20-tick wait, nominally 200 ms at the configured 100 Hz | The branch is linked to post-capture events; the delay is not established as redundant or as first-shot lag |
+| FAT | EOF/chain-boundary and writeback-error handling defects were reproduced in reference code; local fixes were tested with synthetic block I/O | Cache caller contracts, multi-block I/O, SD/RTOS and hardware validation remain incomplete; no installable patch |
+| USB | The MSC vendor callback checks the GP signature; FD28/FD2A/FF28/FF2A require state==2. The handshake path writes 1 after a synthetic helper | The normal transition to 2 is unknown; bypassing the shared gate also exposes write operations |
+| USB data | FD28 reads a word at an address; FF28/FF2A use mapped-memory copy callbacks | This is not a proven complete physical SPI dump; unknown addresses may be MMIO |
+| LED | Candidate runtime address 0x1E844 selects a resource and sends a UI message | It is not a proven white capture-light driver; Flash Off is not implemented |
 
-## Координаты для повторного анализа
+## Coordinates for further analysis
 
-Только для двух SHA выше. Все адреса в таблице — **file offsets**.
+Valid only for the two hashes above. All addresses in this table are **file offsets**.
 
-| Область | Адреса |
+| Area | Offsets |
 |---|---|
 | JPEG selector | 0x82A94 |
 | DQT80 luma/chroma | 0x108CB8 / 0x108D38 |
 | DQT90 luma/chroma | 0x108EB8 / 0x108F38 |
 | DQT95 luma/chroma | 0x1090B8 / 0x109138 |
-| OS-delay | 0x906E4 |
-| 20ticks argument / call | 0x1E1D4 / 0x1E1D8 |
+| OS delay | 0x906E4 |
+| 20-tick argument / call | 0x1E1D4 / 0x1E1D8 |
 | Capture message producer | 0xC7E0 |
 | MSC vendor callback | 0x2AAD4 |
 | FD28 memory dereference | 0x2A92C |
 | SPI read wrapper / driver | 0x139C / 0x308B4 |
 
-Наличие адреса не разрешает заменять инструкцию: необходимо восстановить callers,
-условия ветвления, ABI, владение буфером и фактический эффект на аппаратуре.
-Исследовательские инструменты и полный набор доказательств в этот минимальный
-экспорт не входят; таблица не заменяет независимое воспроизведение.
+An address alone does not justify replacing an instruction. Establish callers,
+branch conditions, ABI, buffer ownership and actual hardware effects first.
+Research tools and the complete evidence set are not included in this minimal
+repository; this table does not replace independent reproduction.
 
-## Что имеет смысл исследовать дальше
+## Useful next investigations
 
-1. Раздельно измерить нажатие→экспозиция, нажатие→надёжное сохранение и интервал
-   двух успешных кадров. Анимация экрана и время файла не равны экспозиции.
-2. Восстановить частоту CPU при запуске и съёмке, прежде чем обсуждать разгон.
-   Для GPCV2247F заявлены до144MHz, аппаратный JPEG, DMA и scaler; частота
-   конкретной камеры не установлена. CPU может ждать периферию, а не вычислять.
-3. Искать лишнюю подготовку/копирование и блокирующие UI-операции, сохраняя
-   необходимые wait, flush, close и синхронизацию кадра.
-4. Проверять JPEG90 отдельно от ускорения: улучшение сжатия может увеличить
-   размер и время записи. Не менять одновременно AE, NR и PLL.
+1. Measure button-to-exposure, button-to-durable-storage and the interval between
+   two successful shots separately. Screen animation and file timestamps are not exposure time.
+2. Recover CPU clock settings at boot and during capture before considering
+   overclocking. GPCV2247F specifications list up to 144 MHz, hardware JPEG, DMA
+   and a scaler; the clock of an individual camera is unverified. The CPU may be
+   waiting for peripherals rather than computing.
+3. Look for redundant preparation/copying and blocking UI operations while
+   preserving required waits, flushes, closes and frame synchronization.
+4. Evaluate JPEG90 separately from speed: reduced compression losses can increase
+   file size and write time. Do not change AE, NR and PLL simultaneously.
 
-Источник спецификации SoC: [Generalplus GPCV2247F](https://www.generalplus.com/GPCV2247F-gCwgf-phLV2kcoLN5006SVpnSNproduct_detail).
-Характеристики этого чипа не подтверждают его наличие в любой версии камеры.
+SoC specification: [Generalplus GPCV2247F](https://www.generalplus.com/GPCV2247F-gCwgf-phLV2kcoLN5006SVpnSNproduct_detail).
+These specifications do not establish that every camera variant uses this chip.
 
-## Условия перед аппаратными экспериментами
+## Before hardware experiments
 
-Штатный SD-updater в изученных образах затрагивает загрузочные области. Малый
-размер патча не делает установку транзакционной. Нужны собственный полный backup,
-проверенный способ восстановления, точная совместимость и независимая проверка
-ограниченного diff. Публичный stock ROM и копия фотографий не заменяют backup flash.
+The stock SD updater in the studied images touches boot regions. A small patch
+does not make installation transactional. A complete device-specific backup,
+a verified recovery method, exact compatibility and independent review of a
+bounded diff are required. A public stock ROM or photo backup is not a flash backup.
 
-Безопасность цветов, сохранения файлов, загрузки и остальных режимов проверяется
-отдельно. Эмуляция с подменёнными периферийными функциями не является аппаратным
-тестом. Ни ускорение, ни безопасная установка этих находок здесь не заявляются.
+Color behavior, file preservation, boot and other camera modes need separate
+validation. Emulation with stubbed peripherals is not a hardware test. Neither
+speed improvements nor safe installation of these findings are claimed here.
