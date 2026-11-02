@@ -11,7 +11,8 @@ def main():
     catalog = json.loads(Path(__file__).with_name('releases.json').read_text())
     if catalog != {'schema_version': 1, 'releases': []}:
         raise SystemExit('Unsupported release catalog: no installation implementation available.')
-    print('No validated releases available. No device was accessed.')
+    print('No supported installation releases available. No device was accessed.')
+    print('Experimental V3.1: https://github.com/Qooaga/chromacrank/releases/tag/v3.1-experimental')
 
 
 if __name__ == '__main__':

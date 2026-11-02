@@ -1,7 +1,13 @@
 # Installation guide
 
-**There is no validated firmware release to install yet.** The release catalog
-is empty, so you do not need to connect your camera or prepare an SD card.
+**V3.1 is available as an experimental download. There is no supported installation
+release yet.** The supported release catalog is empty.
+
+[Get the experimental binary and checksums](https://github.com/Qooaga/chromacrank/releases/tag/v3.1-experimental).
+It was installed in a camera trial, but SD-card access failures were observed.
+Read the release notes for the known issue and recovery requirements. Downloading
+the file to your computer does not require connecting the camera or preparing a card.
+Do not treat availability of the binary as approval to install it.
 
 The steps below describe how an agent will help you check and install a future
 release. They are not instructions for installing experimental firmware.
@@ -9,7 +15,7 @@ release. They are not instructions for installing experimental firmware.
 | Stage | Agent action | What you do or learn | Condition to proceed |
 |---|---|---|---|
 | 1. Open the repository | Read required documents and catalog | Learn whether an update is available | Known, supported catalog format |
-| 2. Check availability | Look for a validated release | Currently: "No update is available; no camera connection is needed" | Stop when the catalog is empty |
+| 2. Check availability | Look for a validated release | Currently: "No supported update is available; no camera connection is needed" | Stop when the catalog is empty |
 | 3. Check compatibility | Follow future release instructions to verify model, variant and source firmware | Answer a few specific questions | Every release criterion is met; a similar name is insufficient |
 | 4. Make an informed choice | Explain changes, limitations, risks and recovery | Decide whether to update | All safety requirements are met |
 | 5. Download | Use the specific validated release link and check SHA-256 | See which file was obtained and verified | Matching hash and version; a hash alone does not establish provenance |

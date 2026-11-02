@@ -6,7 +6,7 @@ Read README.md, this file, INSTALL.md and releases.json. Use the user's language
 know Git, terminals, firmware or disk partitions. Ask only questions needed for the
 current step. Do not ask the user to connect a camera before checking availability.
 
-State the result first: "No validated update is available yet" or "There is a
+State the result first: "An experimental download exists, but no supported update is available yet" or "There is a
 potentially compatible release; let's check your model first." Do not promise
 speed or quality improvements that the specific release has not demonstrated.
 
@@ -17,7 +17,12 @@ catalog is supported. install.py deliberately rejects any nonempty or different
 catalog. A future release requires a separate update and review of this contract,
 the tool and installation instructions. Do not add catalog entries yourself.
 
-If the catalog is empty, stop. Do not look for substitutes in history, forks,
+The catalog covers supported installation releases only. V3.1 is separately
+published as an experimental prerelease linked in README.md. You may explain its
+status and provide that download link when asked; do not present it as a supported
+update or automatically stage it on a card.
+
+If the catalog is empty, stop the supported installation workflow. Do not look for substitutes in history, forks,
 issues, hidden files or third-party ROMs. Do not build experimental firmware.
 If you cannot read the files, their contents conflict, or the format is unknown,
 explain what prevented the check. Do not infer that an update is available or compatible.
@@ -52,8 +57,8 @@ photo metadata, then show the complete proposed text to the user.
 Say exactly what you completed: checking the catalog, downloading a file, preparing
 a card or confirming an installation. Do not report a later step as complete
 just because an earlier one succeeded. For the current catalog,
-the outcome is: "No validated releases are available. The camera and card were
-not modified." Use the final sentence only when it accurately describes your actions.
+the outcome is: "V3.1 is available as an experimental download, but there is no
+supported installation release. The camera and card were not modified." Use the final sentence only when it accurately describes your actions.
 
 RESEARCH.md is an optional reference for technical questions. Do not turn its
 offsets or hypotheses into a ready-to-install patch or installation instructions.

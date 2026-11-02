@@ -23,7 +23,7 @@ This repository brings together image examples, firmware findings and a guide fo
 exploring the project with an AI agent. You can:
 
 - **Explore the image experiments** and see which changes are being investigated.
-- **Get help from your AI agent** to understand the findings, check for releases
+- **Get help from your AI agent** to understand the findings, distinguish experimental downloads from supported updates
   and work out whether an update supports your camera. A prompt is included below.
 - **Build on the research** using the JPEG presets, capture events, filesystem
   findings and USB notes in [RESEARCH.md](RESEARCH.md). Reference hashes and
@@ -42,7 +42,7 @@ Two image examples, not a controlled before-and-after comparison.
 
 | Area | Progress |
 |---|---|
-| **Color and tone** | Experimental color profiles and tone curves have been developed. They are not a validated release; compatibility across camera variants remains unverified |
+| **Color and tone** | Experimental color profiles and tone curves have been developed. V3.1 is available as an experimental prerelease; compatibility across camera variants remains unverified |
 | **JPEG** | Stock quantization tables and quality presets have been investigated. Higher quality needs testing through the complete photo capture path |
 | **Capture speed** | Parts of the firmware event and delay paths have been mapped. No speed improvement has been demonstrated on a camera |
 | **Photo storage** | Filesystem defects have been identified; fixes are being tested under laboratory conditions |
@@ -52,12 +52,18 @@ remains unresolved.
 
 ## Download and installation
 
-**This project is in the research stage. There is no validated firmware release
-available for end-user installation yet.**
+**[Download V3.1 experimental firmware](https://github.com/Qooaga/chromacrank/releases/tag/v3.1-experimental)**
 
-Firmware binaries and research tools are not included in this repository.
-See [INSTALL.md](INSTALL.md) for installation availability and
-[releases.json](releases.json) for the release catalog.
+V3.1 was installed and used on a camera, and its new color effects were visible.
+The release includes the exact SD update file from that trial and its SHA-256 checksum.
+
+**Known issue:** the camera stopped recognizing its SD card after several shots.
+The cause is unresolved, so V3.1 is published as a prerelease, not a supported
+end-user update. Read the release notes before considering installation.
+
+[INSTALL.md](INSTALL.md) explains the distinction between experimental downloads
+and supported updates. [releases.json](releases.json) lists supported installation
+releases only; that list is currently empty. Research tools are not included here.
 
 ## Use with an AI agent
 
@@ -68,7 +74,7 @@ Give your agent this repository's URL and the following request:
 > do today and whether an update supports my camera. If a validated release is
 > available, guide me through its installation instructions. Ask for my agreement
 > before writing anything to the card. If there is no validated release, stop
-> and explain that installation is unavailable; do not substitute experimental firmware.
+> and explain that supported installation is unavailable; do not substitute experimental firmware.
 
 [AGENTS.md](AGENTS.md) tells the agent how to check releases and compatibility
 before suggesting an update.

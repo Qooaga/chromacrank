@@ -3,7 +3,9 @@
 Research status: 2026-11-02. This note records findings from public ROM images
 and the questions still open. It is a starting point for further investigation,
 **not a set of ready-to-install patches or update instructions**. There are no
-supported releases, and compatibility with an individual camera is unverified.
+supported installation releases, and compatibility with an individual camera is
+unverified. The historical V3.1 color firmware is available as an experimental
+prerelease; it does not include the proposed performance or filesystem fixes.
 
 ## Reference images
 
@@ -12,7 +14,7 @@ Complete 2 MiB SPII images, identified by SHA-256:
 - Project-Sirius: `720ed0b65c91b149b0916498732b0ecf40227736ef5e3c126c487a7b5253436c`.
 - Keychain: `cc3b4b2fd7eb71ba5a441decdc86984261fac8418ee3e105d7e2b3c38b7ea42f`.
 
-Binaries are not distributed here. A hash identifies a research input, not the
+The stock reference binaries are not distributed here. A hash identifies a research input, not the
 firmware installed on a particular camera. For the coordinates below,
 **file offset = runtime address + 0x200**.
 
