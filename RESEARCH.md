@@ -1,8 +1,9 @@
 # Technical findings
 
-Research status: 2026-11-02. These are developer references, **not ready-to-install
-patches or update instructions**. There are no supported releases. Analysis used
-public ROM images; compatibility with an individual camera is not guaranteed.
+Research status: 2026-11-02. This note records findings from public ROM images
+and the questions still open. It is a starting point for further investigation,
+**not a set of ready-to-install patches or update instructions**. There are no
+supported releases, and compatibility with an individual camera is unverified.
 
 ## Reference images
 
@@ -29,7 +30,7 @@ firmware installed on a particular camera. For the coordinates below,
 | USB data | FD28 reads a word at an address; FF28/FF2A use mapped-memory copy callbacks | This is not a proven complete physical SPI dump; unknown addresses may be MMIO |
 | LED | Candidate runtime address 0x1E844 selects a resource and sends a UI message | It is not a proven white capture-light driver; Flash Off is not implemented |
 
-## Coordinates for further analysis
+## Reference offsets
 
 Valid only for the two hashes above. All addresses in this table are **file offsets**.
 
@@ -46,8 +47,8 @@ Valid only for the two hashes above. All addresses in this table are **file offs
 | FD28 memory dereference | 0x2A92C |
 | SPI read wrapper / driver | 0x139C / 0x308B4 |
 
-An address alone does not justify replacing an instruction. Establish callers,
-branch conditions, ABI, buffer ownership and actual hardware effects first.
+Before changing an instruction at any of these offsets, check its callers,
+branch conditions, ABI, buffer ownership and effects on hardware.
 Research tools and the complete evidence set are not included in this minimal
 repository; this table does not replace independent reproduction.
 
@@ -70,10 +71,9 @@ These specifications do not establish that every camera variant uses this chip.
 ## Before hardware experiments
 
 The stock SD updater in the studied images touches boot regions. A small patch
-does not make installation transactional. A complete device-specific backup,
-a verified recovery method, exact compatibility and independent review of a
-bounded diff are required. A public stock ROM or photo backup is not a flash backup.
+does not make installation transactional. Before an experiment, obtain a complete backup of the specific device, verify
+a recovery method and compatibility, and have the exact changes independently reviewed. A public stock ROM or photo backup is not a flash backup.
 
 Color behavior, file preservation, boot and other camera modes need separate
-validation. Emulation with stubbed peripherals is not a hardware test. Neither
-speed improvements nor safe installation of these findings are claimed here.
+validation. Emulation with stubbed peripherals is not a hardware test. These findings do not yet demonstrate a speed improvement or establish a safe
+installation procedure.
