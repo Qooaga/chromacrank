@@ -57,9 +57,9 @@ remains unresolved.
 V3.1 was installed and used on a camera, and its new color effects were visible.
 The release includes the exact SD update file from that trial and its SHA-256 checksum.
 
-**Known issue:** the camera stopped recognizing its SD card after several shots.
-The cause is unresolved, so V3.1 is published as a prerelease, not a supported
-end-user update. Read the release notes before considering installation.
+V3.1 has been tested on a camera. Compatibility across other hardware variants
+has not been established, so it remains an experimental prerelease. Read the
+release notes for the test status and installation requirements.
 
 [INSTALL.md](INSTALL.md) explains the distinction between experimental downloads
 and supported updates. [releases.json](releases.json) lists supported installation

@@ -4,8 +4,8 @@
 release yet.** The supported release catalog is empty.
 
 [Get the experimental binary and checksums](https://github.com/Qooaga/chromacrank/releases/tag/v3.1-experimental).
-It was installed in a camera trial, but SD-card access failures were observed.
-Read the release notes for the known issue and recovery requirements. Downloading
+It was installed and tested on a camera. Compatibility across hardware variants
+has not been established. Read the release notes for the test status and recovery requirements. Downloading
 the file to your computer does not require connecting the camera or preparing a card.
 Do not treat availability of the binary as approval to install it.
 
